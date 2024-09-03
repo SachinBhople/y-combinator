@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const cors = require("cors")
+const path = require("path")
 const cookieParser = require("cookie-parser")
 
 require("dotenv").config({ path: "./.env" })
@@ -9,6 +10,7 @@ const app = express()
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.static("uploads"))
+app.use(express.static("dist"))
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -28,7 +30,7 @@ app.use("/api/cofounder", require("./routes/cofounder.routes"))
 app.use("/api/blogs", require("./routes/blog.routes"))
 
 app.use("*", (req, res) => {
-    res.status(200).json({ message: "resouce not found" })
+    res.sendFile(path.join(__dirname, "dist", "index.html"))
 })
 
 app.use((err, req, res, next) => {
