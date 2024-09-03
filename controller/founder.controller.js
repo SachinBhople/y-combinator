@@ -3,7 +3,7 @@ const Founder = require("../model/Founder")
 const Auth = require("../model/Auth")
 const mongoose = require("mongoose")
 exports.createFounderProfile = asyncHandler(async (req, res) => {
-    const result = await Founder.create(req.body)
+    const result = await Founder.create({ ...req.body, userId: req.user })
     res.json({ message: "founder profile create success", result })
 })
 
