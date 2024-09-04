@@ -6,7 +6,7 @@ const router = require("express").Router()
 
 router
 
-    .get("/workshop", AdminProtected, bookworkshopcontroller.getWorkshopById)
+    .get("/workshop", bookworkshopcontroller.getWorkshopById)
     .get("/workshops", AdminProtected, bookworkshopcontroller.getWorkshop)
     .post("/book-workshop", bookworkshopcontroller.bookworkshop)
 
