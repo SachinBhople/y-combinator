@@ -8,9 +8,9 @@ const storage = multer.diskStorage({
         const fn = uuid() + ext
         cb(null, fn)
     },
-    destination: (req, file, cb) => {
-        cb(null, "uploads")
-    }
+    // destination: (req, file, cb) => {
+    //     cb(null, "uploads")
+    // }
 })
 
 exports.uploads = multer({ storage }).single("hero")

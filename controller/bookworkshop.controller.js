@@ -74,7 +74,7 @@ exports.bookworkshop = asyncHandler(async (req, res) => {
 
     const dayBeforeWorkshopCron = `${emailDate.getMinutes()} ${emailDate.getHours()} ${emailDate.getDate()} ${emailDate.getMonth() + 1} *`;
     console.log(dayBeforeWorkshopCron)
-
+ 
     cron.schedule(dayBeforeWorkshopCron, async () => {
         console.log('Sending reminder email one day before the workshop.');
         await sendEmail({
