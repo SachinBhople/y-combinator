@@ -16,7 +16,8 @@ exports.bookworkshop = asyncHandler(async (req, res) => {
     const formattedDate = format(workshopDate, 'dd/MM/yyyy');
     console.log(emailDate);
 
-    const styledServer = `
+    const styledServer =
+        `
         <html>
         <head>
             <style>

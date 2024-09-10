@@ -3,21 +3,41 @@ const fs = require("fs")
 const path = require("path")
 const { uploads } = require("../util/uplodas")
 const Mentorworkshop = require("../model/Mentorworkshop")
+const cloudinary = require("../util/cloudinaryconfig")
 
 
+
+// exports.addMentorWorkshop = asyncHandler(async (req, res) => {
+//     uploads(req, res, async err => {
+//         if (err) {
+//             console.log(err);
+//             return res.status(400).json({ message: "unable to upload image" })
+//         }
+//         console.log(req.user);
+
+//         await Mentorworkshop.create({ ...req.body, hero: req.file.filename, mentorId: req.user })
+//         res.status(201).json({ message: "blog create success" })
+//     })
+// })
 
 exports.addMentorWorkshop = asyncHandler(async (req, res) => {
-    uploads(req, res, async err => {
+    uploads(req, res, async (err) => {
         if (err) {
-            console.log(err);
-            return res.status(400).json({ message: "unable to upload image" })
+            console.log(err)
+            return res.status(400).json({ message: "upload Error" })
         }
-        console.log(req.user);
+        if (req.file.hero) {
+            return res.status(400).json({ message: "Hero Image Is Required" })
+        }
 
-        await Mentorworkshop.create({ ...req.body, hero: req.file.filename, mentorId: req.user })
-        res.status(201).json({ message: "blog create success" })
+        const { secure_url } = await cloudinary.uploader.upload(req.file.path)
+        await Mentorworkshop.create({ ...req.body, hero: secure_url, mentorId: req.user })
+        res.json({ message: "Blog Add Success" })
     })
 })
+
+
+
 exports.updateMentorworkshop = asyncHandler(async (req, res) => {
     uploads(req, res, async err => {
         if (err) {
