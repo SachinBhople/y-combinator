@@ -117,13 +117,15 @@ exports.updateBlog = asyncHandler(async (req, res) => {
 
 exports.deleteBlog = asyncHandler(async (req, res) => {
     try {
-        const { id } = req.params;
-        const result = await Blog.findById(id);
+        const { blogId } = req.params;
+        const result = await Blog.findById(blogId);
+        console.log(result);
+
         if (!result) {
             return res.status(404).json({ message: 'Blog not found' });
         }
         await cloudinary.uploader.destroy(path.basename(result.hero));
-        await Blog.findByIdAndDelete(id)
+        await Blog.findByIdAndDelete(blogId)
         res.json({ message: 'Carousel deleted successfully' });
     } catch (error) {
         console.log(error);
